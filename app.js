@@ -1,23 +1,10 @@
 const express = require("express");
+const checkListRouter = require('./src/routes/checkList')
 
 const app = express();
-
-const log = (req, res, next) => {
-  console.log(req.body);
-  console.log(`Data: ${Date.now()}`);
-  next();
-};
-app.use(log);
-
 app.use(express.json());
-app.get("/", (req, res) => {
-  res.send("<h1>Minha lista de tarefas</h1>");
-});
 
-app.get("/json", (req, res) => {
-  console.log(req.body);
-  res.json({ title: "Tarefa x", done: true });
-});
+app.use('/checkLists', checkListRouter)
 
 app.listen(3000, () => {
   console.log("Servidor rodando");
