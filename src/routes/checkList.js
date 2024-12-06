@@ -5,9 +5,13 @@ const router = express.Router();
 const Checklist = require("../models/checklist");
 
 // trazer todas as tarefas
-router.get("/", (req, res) => {
-  console.log("Ola");
-  res.send();
+router.get("/", async (req, res) => {
+  try {
+    let checklists = await Checklist.find({});
+    res.status(200).json(checklists);
+  } catch (error) {
+    res.status(500).json(error);
+  }
 });
 
 // adicionar tarefa
