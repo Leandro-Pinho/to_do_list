@@ -27,9 +27,13 @@ router.post("/", async (req, res) => {
 });
 
 // trazer uma tarefa especifica pelo id
-router.get("/:id", (req, res) => {
-  console.log(req.params.id);
-  res.send(`ID: ${req.params.id}`);
+router.get("/:id", async (req, res) => {
+  try {
+    let checklist = await Checklist.findById(req.params.id);
+    res.status(200).json(checklist);
+  } catch (error) {
+    res.status(422).json(error);
+  }
 });
 
 // atualizar a tarefa
