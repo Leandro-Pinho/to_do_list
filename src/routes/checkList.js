@@ -37,9 +37,19 @@ router.get("/:id", async (req, res) => {
 });
 
 // atualizar a tarefa
-router.put("/:id", (req, res) => {
-  console.log(req.body);
-  res.send(`PUT ID: ${req.params.id}`);
+router.put("/:id", async (req, res) => {
+  let { name } = req.body;
+
+  try {
+    let checklist = await Checklist.findByIdAndUpdate(
+      req.params.id,
+      { name },
+      { new: true }
+    );
+    res.status(200).json(checklist);
+  } catch (error) {
+    res.status(422).json(error);
+  }
 });
 
 // deletar a tarefa
